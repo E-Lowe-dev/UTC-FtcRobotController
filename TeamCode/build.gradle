@@ -21,6 +21,15 @@ android {
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
+
+    // DEBUGGING
+    defaultConfig {
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+            }
+        }
+    }
 }
 
 dependencies {
