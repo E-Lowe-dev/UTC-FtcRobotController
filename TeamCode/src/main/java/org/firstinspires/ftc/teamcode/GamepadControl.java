@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 @Disabled
@@ -27,12 +28,19 @@ public class GamepadControl extends LinearOpMode {
         while (opModeIsActive()) { // runs until 'stop' is pressed
             float drive;
             float turn;
+            double leftPower;
+            double rightPower;
 
             drive = gamepad1.left_stick_y;
             turn = gamepad1.right_stick_x;
 
+            leftPower = Range.clip(drive + turn,-1.0,1.0);
+            rightPower = Range.clip(drive + turn,-1.0,1.0);
+
             telemetry.addData("Drive","(%.2f)",drive);
             telemetry.addData("Turning","(%.2f)",turn);
+            telemetry.addData("Left wheels power calculated:","(%.2f)",leftPower);
+            telemetry.addData("Right wheels power calculated:","(%.2f)",rightPower);
             telemetry.update();
         }
     }
