@@ -1,12 +1,6 @@
 {
   "name": "FTC Android Dev",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {
-    "ghcr.io/devcontainers/features/java:1": {
-      "version": "17"
-    }
-  },
-  "onCreateCommand": "bash .devcontainer/setup.sh",
+  "build": { "dockerfile": "Dockerfile" },
   "customizations": {
     "vscode": {
       "extensions": [
