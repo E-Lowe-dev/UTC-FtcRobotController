@@ -23,29 +23,33 @@ public class GamepadControl extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotor.class,"front_left");
         frontRight = hardwareMap.get(DcMotor.class,"front_right");
 
+        // Wait for driver to press 'start' (after initialising)
         waitForStart();
         runtime.reset();
-        while (opModeIsActive()) { // runs until 'stop' is pressed
+        while (opModeIsActive()) { // Runs until 'stop' is pressed
             float drive;
             float turn;
             double leftPower;
             double rightPower;
 
-            drive = gamepad1.left_stick_y;
+            // POV Mode maths taken from BasicOpMode_Linear in external.samples
+            drive = -gamepad1.left_stick_y;
             turn = gamepad1.right_stick_x;
-
             leftPower = Range.clip(drive + turn,-1.0,1.0);
             rightPower = Range.clip(drive - turn,-1.0,1.0);
 
+            // Setting calculated power to wheels - see if possible to set at the same time.
             rearLeft.setPower(leftPower);
             frontLeft.setPower(leftPower);
             rearRight.setPower(rightPower);
             frontRight.setPower(rightPower);
 
+            // Show wheel power, gamepad movement and current run time
             telemetry.addData("Drive","(%.2f)",drive);
             telemetry.addData("Turning","(%.2f)",turn);
-            telemetry.addData("Left wheels power calculated:","(%.2f)",leftPower);
-            telemetry.addData("Right wheels power calculated:","(%.2f)",rightPower);
+            telemetry.addData("Left wheels power calculated","(%.2f)",leftPower);
+            telemetry.addData("Right wheels power calculated","(%.2f)",rightPower);
+            telemetry.addData("Status","Runtime"+runtime.toString());
             telemetry.update();
         }
     }
